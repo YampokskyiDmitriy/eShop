@@ -17,6 +17,21 @@ services:
       - redis
     ports:
       - 5003:5003
+  order.api:
+    container_name: lde.order.api
+    build:
+      context: .
+      dockerfile: Order/Order.Host/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5004
+      - Authorization__Authority=http://www.alevelwebsite.com:5002
+      - RabbitMQ__Host=www.alevelwebsite.com:5673
+      - PathBase=http://www.alevelwebsite.com:5004
+    depends_on:
+      - rabbitmq
+    ports:
+      - 5004:5004
   catalog.api:
     container_name: lde.catalog.api
     build:
@@ -61,6 +76,7 @@ services:
       - MvcUrl=http://www.alevelwebsite.com
       - CatalogApi=http://www.alevelwebsite.com:5000
       - BasketApi=http://www.alevelwebsite.com:5003
+      - OrderApi=http://www.alevelwebsite.com:5004
     ports:
       - 5002:5002
   nginx:
@@ -93,6 +109,12 @@ services:
     container_name: lde.redis
     ports:
       - 6380:6379
+  rabbitmq:
+    image: rabbitmq
+    container_name: 'rabbitmq'
+    ports:
+      - 5673:5672
+      - 15673:15672
 networks:
   dockernet:
     external: true
