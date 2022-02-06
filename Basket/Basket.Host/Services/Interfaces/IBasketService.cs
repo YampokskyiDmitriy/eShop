@@ -6,4 +6,5 @@ public interface IBasketService
 {
     Task TestAdd(string userId, string data);
     Task<TestGetResponse> TestGet(string userId);
+    Task TestRemove(string userId);
 }

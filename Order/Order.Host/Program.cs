@@ -47,11 +47,15 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.AddConfiguration();
 builder.Services.Configure<RabbitMQConfig>(
-    builder.Configuration.GetSection("Redis"));
+    builder.Configuration.GetSection("RabbitMQ"));
+
+var rabbitHost = configuration["RabbitMQ:ConnectionString"];
+
+builder.Services.AddSingleton(RabbitHutch.CreateBus(rabbitHost));
 
 builder.Services.AddAuthorization(configuration);
 
-builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
+builder.Services.AddTransient<IJsonSerializer, Infrastructure.Services.JsonSerializer>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 
 builder.Services.AddCors(options =>

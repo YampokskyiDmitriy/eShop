@@ -1,9 +1,13 @@
+using System.Reflection;
 using Basket.Host.Configurations;
 using Basket.Host.Services;
 using Basket.Host.Services.Interfaces;
+using EasyNetQ.AutoSubscribe;
 using Infrastructure.Extensions;
 using Infrastructure.Filters;
+using Infrastructure.MessageBus;
 using Microsoft.OpenApi.Models;
+using Order.Host.Configurations;
 
 var configuration = GetConfiguration();
 
@@ -48,10 +52,14 @@ builder.Services.AddSwaggerGen(options =>
 builder.AddConfiguration();
 builder.Services.Configure<RedisConfig>(
     builder.Configuration.GetSection("Redis"));
+builder.Services.Configure<RabbitMQConfig>(
+    builder.Configuration.GetSection("RabbitMQ"));
+
+builder.Services.AddSingleton(RabbitHutch.CreateBus(configuration["RabbitMQ:ConnectionString"]));
 
 builder.Services.AddAuthorization(configuration);
 
-builder.Services.AddTransient<IJsonSerializer, JsonSerializer>();
+builder.Services.AddTransient<IJsonSerializer, Infrastructure.Services.JsonSerializer>();
 builder.Services.AddTransient<IRedisCacheConnectionService, RedisCacheConnectionService>();
 builder.Services.AddTransient<ICacheService, CacheService>();
 builder.Services.AddTransient<IBasketService, BasketService>();
@@ -88,6 +96,8 @@ app.UseEndpoints(endpoints =>
     endpoints.MapDefaultControllerRoute();
     endpoints.MapControllers();
 });
+
+app.UseSubscribe("Basket", Assembly.GetExecutingAssembly());
 
 app.Run();
 

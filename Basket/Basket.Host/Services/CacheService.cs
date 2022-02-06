@@ -39,6 +39,15 @@ namespace Basket.Host.Services
                 : default(T)!;
         }
 
+        public async Task RemoveAsync(string key)
+        {
+            var redis = GetRedisDatabase();
+
+            var cacheKey = GetItemCacheKey(key);
+
+            await redis.KeyDeleteAsync(cacheKey);
+        }
+
         private string GetItemCacheKey(string userId) =>
             $"{userId}";
 

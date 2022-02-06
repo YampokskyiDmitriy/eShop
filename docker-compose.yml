@@ -11,10 +11,12 @@ services:
       - ASPNETCORE_URLS=http://+:5003
       - Authorization__Authority=http://www.alevelwebsite.com:5002
       - Redis__Host=www.alevelwebsite.com:6380
-      - Redis__CacheTimeout=00:00:10
+      - Redis__CacheTimeout=00:01:00
+      - RabbitMQ__ConnectionString=host=192.168.0.1:5700;virtualHost=/;username=guest;password=guest
       - PathBase=http://www.alevelwebsite.com:5003
     depends_on:
       - redis
+      - rabbitmq
     ports:
       - 5003:5003
   order.api:
@@ -26,7 +28,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5004
       - Authorization__Authority=http://www.alevelwebsite.com:5002
-      - RabbitMQ__Host=www.alevelwebsite.com:5673
+      - RabbitMQ__ConnectionString=host=192.168.0.1:5700;virtualHost=/;username=guest;password=guest
       - PathBase=http://www.alevelwebsite.com:5004
     depends_on:
       - rabbitmq
@@ -110,11 +112,12 @@ services:
     ports:
       - 6380:6379
   rabbitmq:
-    image: rabbitmq
-    container_name: 'rabbitmq'
+    image: rabbitmq:3-management
+    container_name: lde.rabbitmq
+    hostname: rabbitmq-container
     ports:
-      - 5673:5672
-      - 15673:15672
+      - 5700:5672
+      - 15672:15672
 networks:
   dockernet:
     external: true

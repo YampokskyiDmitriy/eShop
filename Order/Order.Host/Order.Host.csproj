@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,5 +17,4 @@
       <ProjectReference Include="..\..\Infrastructure\Infrastructure.MessageBus\Infrastructure.MessageBus.csproj" />
       <ProjectReference Include="..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
-
 </Project>

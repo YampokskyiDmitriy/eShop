@@ -7,3 +7,4 @@ global using Infrastructure.Services;
 global using Infrastructure;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Options;
+global using EasyNetQ;

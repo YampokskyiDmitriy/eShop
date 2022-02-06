@@ -22,7 +22,10 @@ public static class AuthorizationExtensions
             {
                 options.Authority = authority;
                 options.RequireHttpsMetadata = false;
-                options.Audience = "catalog";
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false
+                };
             })
             .AddJwtBearer(AuthScheme.Site, options =>
             {

@@ -5,5 +5,7 @@ namespace Basket.Host.Services.Interfaces
         Task AddOrUpdateAsync<T>(string key ,T value);
 
         Task<T> GetAsync<T>(string key);
+        
+        Task RemoveAsync(string key);
     }
 }
