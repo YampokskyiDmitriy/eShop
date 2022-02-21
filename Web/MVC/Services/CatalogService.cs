@@ -50,8 +50,7 @@ public class CatalogService : ICatalogService
         {
             new SelectListItem()
             {
-                Text = "All",
-                Value = null
+                Text = "All"
             }
         };
 
@@ -79,8 +78,7 @@ public class CatalogService : ICatalogService
         {
             new SelectListItem()
             {
-                Text = "All",
-                Value = null
+                Text = "All"
             }
         };
 
