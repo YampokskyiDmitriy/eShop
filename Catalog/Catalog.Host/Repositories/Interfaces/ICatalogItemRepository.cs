@@ -6,6 +6,7 @@ namespace Catalog.Host.Repositories.Interfaces;
 public interface ICatalogItemRepository
 {
     Task<PaginatedItems<CatalogItem>> GetByPageAsync(int pageIndex, int pageSize);
+    Task<PaginatedItems<CatalogItem>> GetByPageAsync(int pageIndex, int pageSize, int? brandFilter, int? typeFilter);
     Task<CatalogItem?> GetByIdAsync(int id);
     Task<IEnumerable<CatalogItem>> GetByBrandAsync(string brandTitle);
     Task<IEnumerable<CatalogItem>> GetByTypeAsync(string typeTitle);

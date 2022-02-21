@@ -1,3 +1,4 @@
+using Catalog.Host.Configurations;
 using Catalog.Host.Models.Dtos;
 using Catalog.Host.Models.Enums;
 using Catalog.Host.Models.Requests;
@@ -20,7 +21,7 @@ public class CatalogBffController : ControllerBase
     private readonly IOptions<CatalogConfig> _config;
 
     public CatalogBffController(
-         ILogger<CatalogBffController> logger,
+        ILogger<CatalogBffController> logger,
         ICatalogService catalogService,
         ICatalogItemService catalogItemService,
         ICatalogBrandService catalogBrandService,
